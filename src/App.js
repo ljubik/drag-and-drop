@@ -8,6 +8,7 @@ import db from "./db/db.json";
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const About = lazy(() => import('./pages/About'));
+const Toptable = lazy(() => import('./pages/Toptable'));
 
 class App extends Component {
   state = {
@@ -19,7 +20,7 @@ class App extends Component {
     const { contacts } = this.state;
     const twin = contacts.some((c) => c.name === el.name);
     twin
-      ? alert(`Alarma`)
+      ? alert(`Alarm`)
       : this.setState((prev) => {
           return {
             contacts: [...prev.contacts, el],
@@ -50,6 +51,12 @@ class App extends Component {
           />
           <Route exact path="/about" render={props => 
             <About 
+              {...props} 
+              onChangePath={this.onChangePath}
+            />}
+          />
+          <Route exact path="/toptable" render={props => 
+            <Toptable 
               {...props} 
               onChangePath={this.onChangePath}
             />}

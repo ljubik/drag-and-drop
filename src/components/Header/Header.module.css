@@ -2,3 +2,16 @@
   background: yellow;
   padding: 50px;
 }
+
+ul {
+  display: flex;
+}
+
+li {
+  width: 10%;
+  height: 40px;
+  margin: 1%;
+  font-size: 4 em;
+  font-weight: 700;
+  list-style: none;
+}
