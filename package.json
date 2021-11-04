@@ -1,9 +1,11 @@
 {
-  "name": "my-react-starter",
-  "version": "0.1.0",
+  "name": "my-react-trello-dnd",
+  "version": "0.2.0",
   "private": true,
   "homepage": "https://ljubik.github.io/",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
@@ -17,6 +19,7 @@
     "react-bootstrap": "^1.5.0",
     "react-dnd": "^14.0.4",
     "react-dnd-html5-backend": "^14.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.1",
     "react-lazy-load-image-component": "^1.5.1",
     "react-redux": "^7.2.3",
@@ -25,6 +28,7 @@
     "react-scripts": "4.0.2",
     "redux": "^4.0.5",
     "uuid": "^8.3.2",
+    "react-uuid": "^1.0.2",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
