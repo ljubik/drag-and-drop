@@ -12,7 +12,8 @@ const TrelloCard = ({ card, index }) => {
             {...provided.dragHandleProps}
             {...provided.draggableProps}>
             <Paper className={classes.trelloCard}>
-              {card.title}
+              <h4>{card.title}</h4>
+              <h5>Створено: {card.datetime}</h5>
             </Paper>
           </div>
         )

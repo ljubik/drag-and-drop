@@ -6,18 +6,15 @@
       "cards": [
         {
           "id": "01card",
-          "title": "Test 01 from DB",
-          "datetime":"2021-11-4"
+          "title": "Test 01 from DB"
         },
         {
           "id": "02card",
-          "title": "Test 02 from DB",
-          "datetime":"2021-11-5"
+          "title": "Test 02 from DB"
         },
         {
           "id": "03card",
-          "title": "Test 03 Trello tasks",
-          "datetime":"2021-11-6"
+          "title": "Test 03 Trello tasks"
         }
       ]
     },

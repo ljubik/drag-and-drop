@@ -14,10 +14,18 @@ const AddCardOrListText = ({ setOpen, type, listId }) => {
     setOpen(false)
   }
 
+  const handleRemoveCardOrList = () => {
+    type ? addList(title) : addCard(title, listId)
+    setTitle('')
+    setOpen(true)
+  }
+
   return (
     <>
-      <Paper className={classes.card}>
-        <InputBase value={title}
+      <Paper className={classes.card} onBlur={handleAddCardOrList}>
+        <InputBase
+          required
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
           onBlur={(e) => setOpen(false)}
           multiline
@@ -28,7 +36,7 @@ const AddCardOrListText = ({ setOpen, type, listId }) => {
       <div className={classes.confirm}>
         <div className={classes.options}>
           <Button className={classes.btnConfirm}
-          onClick={handleAddCardOrList}>Add {type ? 'list' : 'card'}</Button>
+            onClick={handleAddCardOrList}>Add {type ? 'list' : 'card'}</Button>
           <IconButton onClick={() => setOpen(false)}>
             <ClearIcon />
           </IconButton>

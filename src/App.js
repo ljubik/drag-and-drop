@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from 'react'
+import { useState } from 'react';
 import db from "./db/db.json";
 import TrelloList from './components/TrelloList';
 import { makeStyles } from '@material-ui/core';
@@ -7,12 +7,12 @@ import AddCardOrList from './components/AddCardOrList';
 import mockData from './mockData';
 import ContextAPI from './ContextAPI';
 import uuid from 'react-uuid';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 
 function App() {
   const classes = useStyle()
-  const [data, setData] = useState(mockData)
+  const [data, setData] = useState(db)
 
   const updateListTitle = (updatedTitle, listId) => {
     const list = data.lists[listId]
@@ -24,24 +24,42 @@ function App() {
         [listId]: list
       }
     })
+    console.log("updateListTitle")
   }
 
   const addCard = (title, listId) => {
     const newCardId = uuid()
+    const datetime = new Date().toLocaleTimeString()
     const newCard = {
       id: newCardId,
-      title
+      title,
+      datetime
     }
     const list = data.lists[listId]
     list.cards = [...list.cards, newCard]
-    setData({
-      ...data,
+
+    // setData({
+    //   ...data,
+    //   lists: {
+    //     ...data.lists,
+    //     [listId]: list
+    //   }
+    // })
+        setData({
+      listIds: [...data.listIds],
       lists: {
         ...data.lists,
         [listId]: list
-      }
+      },
     })
+    console.log("addCard")
   }
+
+const delCard = (data) => {
+
+    console.log("delete Card", data)
+  }
+
 
   const addList = (title) => {
     const newListId = uuid()
@@ -50,18 +68,19 @@ function App() {
       title,
       cards: []
     }
- 
+    
     setData({
       listIds: [...data.listIds, newListId],
       lists: {
         ...data.lists,
         [newListId]: newList
       },
-     })
+    })
+    console.log("addList")
   }
 
   const onDragEnd = (result) => {
-    const { destination, destination: { droppableId: destDroppableId, index : destIndex }, source: { droppableId: srcDroppableId, index: srcIndex }, draggableId, type } = result;
+    const { destination, destination: { droppableId: destDroppableId, index : destIndex }, source, source: { droppableId: srcDroppableId, index: srcIndex }, draggableId, type } = result;
     console.table([{ draggableId, srcDroppableId, destDroppableId }])
     console.table([{ type, srcIndex, destIndex }])
 
@@ -82,6 +101,37 @@ function App() {
       destList.cards.splice(destIndex, 0, dragginCard)
     }
   }
+
+ const moveTaskToDifferentList = (start, finish, source, destination, draggableId) => {
+    // remove task from start tasks
+    const newStartTaskIds = start.taskIds;
+    newStartTaskIds.splice(source.index, 1);
+    const newStartColumn = {
+      ...start,
+      taskIds: newStartTaskIds
+    }
+  
+    // add task to finish tasks
+    const newFinishTaskIds = finish.taskIds;
+    newFinishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinishColumn  = {
+      ...finish,
+      taskIds: newFinishTaskIds
+    }
+
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [newStartColumn.id]: newStartColumn,
+        [newFinishColumn.id]: newFinishColumn
+      },
+    };
+
+    this.setState(newState);
+  }
+
+
 
   return (
     <ContextAPI.Provider value={{ updateListTitle, addCard, addList }}>
