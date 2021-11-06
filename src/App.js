@@ -56,10 +56,24 @@ function App() {
   }
 
 const delCard = (data) => {
-
+ const newStartCardIds = data.CardIds;
+    newStartCardIds.splice(data.index, 1);
+    const newCardIds = {
+      ...data,
+      cardIds: newStartCardIds
+    }
     console.log("delete Card", data)
+}
+  
+const delList = (data) => {
+ const newStartListIds = data.listIds;
+    newStartListIds.splice(data.index, 1);
+    const newListIds = {
+      ...data,
+      listIds: newStartListIds
+    }
+    console.log("delete List", data)
   }
-
 
   const addList = (title) => {
     const newListId = uuid()
@@ -81,8 +95,10 @@ const delCard = (data) => {
 
   const onDragEnd = (result) => {
     const { destination, destination: { droppableId: destDroppableId, index : destIndex }, source, source: { droppableId: srcDroppableId, index: srcIndex }, draggableId, type } = result;
-    console.table([{ draggableId, srcDroppableId, destDroppableId }])
-    console.table([{ type, srcIndex, destIndex }])
+    // console.table([{ draggableId, srcDroppableId, destDroppableId }])
+    // console.table([{ type, srcIndex, destIndex }])
+    console.log(type, srcIndex, destIndex)
+    console.log(draggableId, srcDroppableId, destDroppableId)
 
     if (!destination) return;
     if (type === "list") {
@@ -131,12 +147,14 @@ const delCard = (data) => {
     this.setState(newState);
   }
 
-
+function getRnd(max) {
+  return Math.floor(Math.random() * max);
+}
 
   return (
     <ContextAPI.Provider value={{ updateListTitle, addCard, addList }}>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="12345" type="list" direction="horizontal">
+        <Droppable droppableId={"list"+(getRnd(100))} type="list" direction="horizontal">
           {
             (provided) => (
               <div className={classes.root} ref={provided.innerRef} {...provided.droppableProps}>
